@@ -16,7 +16,7 @@ public class CustomerFilter {
     private static final Double OFFICE_LONGITUDE_DEGREES = Double.valueOf(-6.2592576);
     private static final Double OFFICE_LATITUDE_RADIANS = Math.toRadians(OFFICE_LATITUDE_DEGREES);
     private static final Double INVITE_RADIUS_METRES = Double.valueOf(100 * 1000); // 100 Km
-    private static final Double EARTH_RADIUS = Double.valueOf(6371 * 1000); // 6371 Km
+    private static final Double EARTH_RADIUS_METRES = Double.valueOf(6371 * 1000); // 6371 Km
     // Should be in the path
     private final String CUSTOMER_FILE_NAME = "customers.txt";
 
@@ -47,7 +47,7 @@ public class CustomerFilter {
         double denominatorTerm = Math.sin(la1) * Math.sin(la2) + Math.cos(la1) * Math.cos(la2) * Math.cos(deltaLo);
         double centralAngle = Math.atan2(Math.sqrt(numeratorTerm1 + numeratorTerm2), denominatorTerm);
 
-        return EARTH_RADIUS * centralAngle;
+        return EARTH_RADIUS_METRES * centralAngle;
     }
 
     private List<Customer> readCustomersFromFile() throws IOException {
