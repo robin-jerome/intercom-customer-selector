@@ -44,7 +44,7 @@ public class CustomerFilter {
      * @throws IOException
      */
     public List<Customer> findCustomersInRangeSortedByIdDescending() throws IOException {
-        return readCustomersFromFile(customerFileName).stream()
+        return readCustomersFromFile().stream()
                 .filter(c -> distanceFromFocalPoint(c.getLatitude(), c.getLongitude()) <= inviteRadius)
                 .sorted((o1, o2) -> o2.getUserId().compareTo(o1.getUserId()))
                 .collect(Collectors.toList());
@@ -80,8 +80,8 @@ public class CustomerFilter {
         return EARTH_RADIUS_METRES * centralAngle;
     }
 
-    List<Customer> readCustomersFromFile(String fileName) throws IOException {
-        try (Stream<String> stream = Files.lines(Paths.get(fileName), Charset.forName("utf-8"))) {
+    List<Customer> readCustomersFromFile() throws IOException {
+        try (Stream<String> stream = Files.lines(Paths.get(customerFileName), Charset.forName("utf-8"))) {
             return stream.filter(s -> !s.isEmpty())
                     .map(jsonStr -> JSONSupport.fromJSON(jsonStr, Customer.class))
                     .collect(Collectors.toList());
